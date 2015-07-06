@@ -1,0 +1,17 @@
+ The idea of this algorithm is to find a natural grouping in a set of data ([SK92], [DH73]. Every data vector is associated with a point in a d-dimensional data space. The hope is that the vectors of the same class form a cloud or a cluster in data space. The algorithm presupposes that the vectors belonging to the same class are distributed normally with a mean vector , and that all input vectors are normalized. To classify a feature vector measure the Euclidian distance from to all other mean vectors and assign to the class of the nearest mean. But what happens if a pattern of class is assigned to a wrong class ? Then for this wrong classified pattern the two mean vectors and are moved or trained in the following way:
+
+    The reference vector which the wrong classified pattern belongs to, and which is the nearest neighbor to this pattern, is moved a little bit towards this pattern.
+    The mean vector , to which a pattern of class is assigned wrongly, is moved away from it. 
+
+The vectors are moved using the rule:
+
+where is the weightgif between the output of a input unit i and a output unit j. is the learning parameter. By choosing it less or greater than zero, the direction of movement of a vector can be influenced.
+
+The DLVQ algorithm works in the following way:
+
+    Load the (normalized) training data, and calculate for every class the mean vector . Initialize the net with these vectors. This means: Generate a unit for every class and initialize its weights with the corresponding values.
+    Now try to associate every pattern in the training set with a reference vector. If a trainings vector of a class is assigned to a class then do the following:
+        Move the vector which is nearest to in its direction.
+        Move the mean vector , to which is falsely assigned to away from it. 
+    Repeat this procedure until the number of correctly classified vectors no longer increases.
+    Now calculate, from the vectors of a class associated with a wrong class , a new prototype vector . For every class, choose one of the new mean vectors and add it to the net. Return to step 2. 
